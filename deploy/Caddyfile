@@ -1,0 +1,11 @@
+# Free automatic HTTPS in front of the server (https://caddyserver.com).
+# 1. Point a DNS A record (mcp.example.com) at your VPS.
+# 2. Run remote-fs-mcp on 127.0.0.1:8765 (MCP_FS_HOST=127.0.0.1).
+# 3. Set MCP_FS_ALLOWED_HOSTS=mcp.example.com in .env
+# 4. sudo caddy run --config Caddyfile
+
+mcp.example.com {
+	reverse_proxy 127.0.0.1:8765 {
+		flush_interval -1
+	}
+}

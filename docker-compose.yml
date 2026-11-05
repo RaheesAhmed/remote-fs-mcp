@@ -1,0 +1,18 @@
+services:
+  remote-fs-mcp:
+    build: .
+    restart: unless-stopped
+    ports:
+      - "8765:8765"
+    env_file: .env
+    environment:
+      MCP_FS_ROOT: /workspace
+    volumes:
+      # the folder the AI works in (create it next to this file, or point to your project)
+      - ./workspace:/workspace
+    # Hardening: the AI's commands run in this container, not on your host
+    read_only: false
+    security_opt:
+      - no-new-privileges:true
+    mem_limit: 2g
+    pids_limit: 512

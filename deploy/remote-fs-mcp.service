@@ -1,0 +1,20 @@
+# systemd unit for a Linux VPS:
+#   sudo cp remote-fs-mcp.service /etc/systemd/system/
+#   sudo systemctl daemon-reload && sudo systemctl enable --now remote-fs-mcp
+#   journalctl -u remote-fs-mcp -f
+
+[Unit]
+Description=Remote filesystem + terminal MCP server
+After=network-online.target
+
+[Service]
+User=agent
+WorkingDirectory=/opt/remote-fs-mcp
+EnvironmentFile=/opt/remote-fs-mcp/.env
+ExecStart=/opt/remote-fs-mcp/.venv/bin/remote-fs-mcp
+Restart=always
+RestartSec=3
+NoNewPrivileges=true
+
+[Install]
+WantedBy=multi-user.target
